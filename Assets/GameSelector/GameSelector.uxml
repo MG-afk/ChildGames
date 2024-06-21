@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="GameSelector" style="flex-direction: row; width: 512px; height: 512px;">
+        <ui:Button text="Left" display-tooltip-when-elided="true" name="LeftButton" style="width: 128px; height: 512px;" />
+        <ui:VisualElement name="Image" style="background-image: url(&apos;project://database/Assets/GameSelector/Placeholder.png?fileID=2800000&amp;guid=3c801c66a2cfe3a44a31f6b464008b4e&amp;type=3#Placeholder&apos;); width: 256px; height: 512px;" />
+        <ui:Button text="Right" display-tooltip-when-elided="true" name="RightButton" style="height: 512px; width: 128px;" />
+    </ui:VisualElement>
+    <ui:Button text="Play" display-tooltip-when-elided="true" name="PlayButton" style="width: 512px;" />
+</ui:UXML>
