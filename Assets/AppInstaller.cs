@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using XMG.Core;
 using Zenject;
 
 namespace XMG.ChildGame
@@ -10,9 +9,15 @@ namespace XMG.ChildGame
 		[SerializeField]
 		private AppViewContainer _appViewContainer;
 
+		[SerializeField]
+		private MiniGame[] _miniGames;
+
 		public override void InstallBindings()
 		{
 			InstallView();
+
+			Container.Bind<InputControls>().AsSingle();
+			Container.Bind<MiniGame[]>().FromInstance(_miniGames).AsSingle();
 
 			Container.Bind<IInitializable>()
 				.To<AppStartup>()

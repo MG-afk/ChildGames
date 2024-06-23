@@ -18,7 +18,7 @@ namespace XMG.ChildGame
 			}
 		}
 
-		public BindableProperty(T value)
+		public BindableProperty(T value = default)
 		{
 			_value = value;
 		}

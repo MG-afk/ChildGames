@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: AppInstaller
   m_EditorClassIdentifier: 
   _appViewContainer: {fileID: 11400000, guid: 97fe84183f485cc499efd907c0843632, type: 2}
+  _miniGames:
+  - SceneId: Dentist
+    MonoInstaller: {fileID: 2596459936598663720, guid: 52575da86cd4d7c4cbfc49bef8b5b868, type: 3}
+    PreviewImage: {fileID: 21300000, guid: 1afb276a5904e914da528abcce23c418, type: 3}

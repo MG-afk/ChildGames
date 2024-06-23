@@ -9,9 +9,6 @@ namespace XMG.ChildGame
 		[SerializeField]
 		private UIDocument _document;
 
-		[SerializeField]
-		private Sprite[] _sprites;
-
 		private Button _leftButton;
 		private VisualElement _image;
 		private Button _rightButton;
@@ -21,9 +18,6 @@ namespace XMG.ChildGame
 
 		public override void Bind()
 		{
-			//TODO: Make the provider checking how much system left
-			Controller.AmountOfGames = _sprites.Length;
-
 			if (!_document)
 			{
 				_document = GetComponent<UIDocument>();
@@ -52,7 +46,7 @@ namespace XMG.ChildGame
 
 		private void ChangeIndex(int index)
 		{
-			_image.style.backgroundImage = new StyleBackground(_sprites[index]);
+			_image.style.backgroundImage = new StyleBackground(Controller.MiniGames[index].PreviewImage);
 		}
 	}
 }

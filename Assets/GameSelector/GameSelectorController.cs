@@ -1,20 +1,39 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+using XMG.ChildGame.Dentist;
+using Zenject;
 
 namespace XMG.ChildGame
 {
 	public class GameSelectorController : BaseController
 	{
-		public BindableProperty<int> CurrentGameIndex { get; }
-		public int AmountOfGames { get; set; }
+		private readonly MiniGame[] _miniGames;
+		private readonly DiContainer _diContainer;
 
-		public GameSelectorController()
+		public BindableProperty<int> CurrentGameIndex { get; }
+		public MiniGame[] MiniGames => _miniGames;
+		public int AmountOfGames => _miniGames.Length;
+
+		public GameSelectorController(MiniGame[] miniGames, DiContainer diContainer)
 		{
+			_miniGames = miniGames;
+			_diContainer = diContainer;
+
 			CurrentGameIndex = new(0);
 		}
 
 		public void StartGame()
 		{
-			Debug.Log("Start" + CurrentGameIndex.Value);
+			var selectedGame = _miniGames[CurrentGameIndex.Value];
+
+			SceneManager.LoadSceneAsync(selectedGame.SceneId, LoadSceneMode.Additive);
+
+			Install(selectedGame.Installer);
+		}
+
+		public void Install<T>(T _) where T : Installer
+		{
+			_diContainer.Install<T>();
 		}
 
 		public void SelectGame(SideIndex sideIndex)
