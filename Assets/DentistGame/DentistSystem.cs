@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace XMG.ChildGame.Dentist
+﻿namespace XMG.ChildGame.Dentist
 {
 	public class DentistSystem
 	{
@@ -10,10 +8,5 @@ namespace XMG.ChildGame.Dentist
 		{
 			_input = input;
 		}
-	}
-
-	public class Mission
-	{
-		public event Action<bool> MissionAcomplished;
 	}
 }

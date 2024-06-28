@@ -1,23 +1,20 @@
-﻿using XMG.ChildGame.DentistGame.Patient;
+﻿using UnityEngine;
+using XMG.ChildGame.DentistGame.Patient;
 using Zenject;
 
 namespace XMG.ChildGame.Dentist
 {
-	public class DentistGameInstaller : Installer
+	[CreateAssetMenu(fileName = "DentistGameInstaller", menuName = "Installers/DentistGameInstaller")]
+	public class DentistGameInstaller : ScriptableObjectInstaller<DentistGameInstaller>
 	{
-		private readonly DentistViewContainer _dentistViewContainer;
-
-		public DentistGameInstaller(DentistViewContainer dentistViewContainer)
-		{
-			_dentistViewContainer = dentistViewContainer;
-		}
+		[SerializeField]
+		private DentistViewContainer _dentistViewContainer;
 
 		public override void InstallBindings()
 		{
 			Container.Bind<DentistSystem>().AsSingle();
 
-			Container.Bind<IInitializable>()
-				.To<DentistGameStartup>()
+			Container.BindInterfacesAndSelfTo<DentistGameStartup>()
 				.AsSingle();
 
 			Container.BindFactory<PatientView, PatientView.Factory>()

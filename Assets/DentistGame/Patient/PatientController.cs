@@ -4,32 +4,21 @@ namespace XMG.ChildGame.DentistGame.Patient
 {
 	public class PatientController : BaseController
 	{
-		private readonly InputControls _input;
-
-		public BindableProperty<bool> Clicked { get; } = new();
-
-		public PatientController(InputControls input)
-		{
-			_input = input;
-
-			_input.Player.Click.performed += OnClick;
-			_input.Player.Click.canceled += OnUnclick;
-		}
+		public BindableProperty<ToothSubView> ClickedOnTooth { get; } = new();
 
 		public override void Dispose()
 		{
-			_input.Player.Click.performed -= OnClick;
-			_input.Player.Click.canceled -= OnUnclick;
 		}
 
-		private void OnClick(InputAction.CallbackContext _)
+		public void ClickOnTooth(InputAction.CallbackContext _)
 		{
-			Clicked.Value = true;
+			RaycasterSystem.RaycastFromMainCamera<ToothSubView>(out var tooth);
+
+			if (tooth == null)
+				return;
+
+			ClickedOnTooth.Value = tooth;
 		}
 
-		private void OnUnclick(InputAction.CallbackContext _)
-		{
-			Clicked.Value = false;
-		}
 	}
 }

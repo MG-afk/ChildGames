@@ -5,4 +5,5 @@
         <ui:Button text="Right" display-tooltip-when-elided="true" name="RightButton" style="height: 512px; width: 128px;" />
     </ui:VisualElement>
     <ui:Button text="Play" display-tooltip-when-elided="true" name="PlayButton" style="width: 512px;" />
+    <ui:Button text="Close" display-tooltip-when-elided="true" name="CloseButton" style="width: 64px; align-items: flex-end; justify-content: flex-start; flex-direction: column; height: 64px; position: relative; top: auto; left: auto; white-space: nowrap; -unity-text-align: middle-center; -unity-font-style: bold;" />
 </ui:UXML>

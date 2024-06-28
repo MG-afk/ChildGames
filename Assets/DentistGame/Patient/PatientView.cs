@@ -6,21 +6,29 @@ namespace XMG.ChildGame.DentistGame.Patient
 {
 	public class PatientView : BaseView<PatientController>
 	{
-		private Color _toothColor;
+		private InputControls _input;
 
-		[SerializeField]
-		private SpriteRenderer[] _teeth;
+		[Inject]
+		public void Contructor(InputControls input)
+		{
+			_input = input;
+		}
 
 		public override void Bind()
 		{
-			_toothColor = _teeth[0].color;
-
-			
+			_input.Player.Click.performed += Controller.ClickOnTooth;
+			Controller.ClickedOnTooth.AddListener(ClickOnTooth);
 		}
 
-		public void ClickOnTooth(SpriteRenderer toothSpriteRenderer, bool shouldGrow)
+		public override void BeforeDispose()
 		{
-			toothSpriteRenderer.DOColor(Color.yellow, 1f);
+			_input.Player.Click.performed -= Controller.ClickOnTooth;
+			Controller.ClickedOnTooth.RemoveListener(ClickOnTooth);
+		}
+
+		public void ClickOnTooth(ToothSubView tooth)
+		{
+			tooth.SpriteRenderer.DOColor(Color.yellow, 1f);
 		}
 
 		public class Factory : PlaceholderFactory<PatientView> { }

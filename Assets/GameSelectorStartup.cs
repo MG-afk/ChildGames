@@ -2,11 +2,11 @@
 
 namespace XMG.ChildGame
 {
-	public class AppStartup : IInitializable
+	public class GameSelectorStartup : IInitializable
 	{
 		private readonly GameSelectorView.Factory _gameSelectorViewFactory;
 
-		public AppStartup(GameSelectorView.Factory gameSelectorViewFactory)
+		public GameSelectorStartup(GameSelectorView.Factory gameSelectorViewFactory)
 		{
 			_gameSelectorViewFactory = gameSelectorViewFactory;
 		}

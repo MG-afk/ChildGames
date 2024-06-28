@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq;
 using UnityEngine.SceneManagement;
 using XMG.ChildGame.Dentist;
 using Zenject;
@@ -7,33 +8,27 @@ namespace XMG.ChildGame
 {
 	public class GameSelectorController : BaseController
 	{
-		private readonly MiniGame[] _miniGames;
-		private readonly DiContainer _diContainer;
+		private readonly MiniGamesProvider _miniGamesProvider;
+
+		private IMiniGame _currentLoadedMiniGame;
 
 		public BindableProperty<int> CurrentGameIndex { get; }
-		public MiniGame[] MiniGames => _miniGames;
-		public int AmountOfGames => _miniGames.Length;
+		public MiniGamesProvider MiniGamesProvider => _miniGamesProvider;
+		public int AmountOfGames => _miniGamesProvider.GamesByType.Count;
 
-		public GameSelectorController(MiniGame[] miniGames, DiContainer diContainer)
+		public GameSelectorController(MiniGamesProvider miniGamesProvider, DiContainer diContainer)
 		{
-			_miniGames = miniGames;
-			_diContainer = diContainer;
+			_miniGamesProvider = miniGamesProvider;
 
 			CurrentGameIndex = new(0);
 		}
 
 		public void StartGame()
 		{
-			var selectedGame = _miniGames[CurrentGameIndex.Value];
+			var selectedGameKey = _miniGamesProvider.GamesByType.Keys.ToArray()[CurrentGameIndex.Value];
+			_currentLoadedMiniGame = _miniGamesProvider.GamesByType[selectedGameKey];
 
-			SceneManager.LoadSceneAsync(selectedGame.SceneId, LoadSceneMode.Additive);
-
-			Install(selectedGame.Installer);
-		}
-
-		public void Install<T>(T _) where T : Installer
-		{
-			_diContainer.Install<T>();
+			SceneManager.LoadSceneAsync(_currentLoadedMiniGame.SceneId);
 		}
 
 		public void SelectGame(SideIndex sideIndex)
@@ -42,6 +37,11 @@ namespace XMG.ChildGame
 			var newGameIndex = (CurrentGameIndex.Value + sideIndexValue) % AmountOfGames;
 
 			CurrentGameIndex.Value = newGameIndex < 0 ? AmountOfGames - 1 : newGameIndex;
+		}
+
+		public void CloseGame()
+		{
+			SceneManager.UnloadSceneAsync(_currentLoadedMiniGame.SceneId);
 		}
 	}
 }

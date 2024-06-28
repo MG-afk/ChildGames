@@ -1,11 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
 using XMG.ChildGame.DentistGame.Patient;
+using Zenject;
 
 namespace XMG.ChildGame.Dentist
 {
-	public class DentistGameStartup : Zenject.IInitializable
+	public class DentistGameStartup : IInitializable, IDisposable
 	{
 		private readonly PatientView.Factory _patientFactory;
+
+		private PatientView _patientView;
 
 		public DentistGameStartup(PatientView.Factory patientFactory)
 		{
@@ -14,7 +17,12 @@ namespace XMG.ChildGame.Dentist
 
 		public void Initialize()
 		{
-			_patientFactory.Create();
+			_patientView = _patientFactory.Create();
+		}
+
+		public void Dispose()
+		{
+			UnityEngine.Object.Destroy(_patientView?.gameObject);
 		}
 	}
 }
