@@ -8,8 +8,6 @@ namespace XMG.ChildGame
 	{
 		public override void InstallBindings()
 		{
-			Debug.Log("AppInstaller called.");
-
 			Container.Bind<InputControls>().AsSingle();
 			Container.BindInterfacesAndSelfTo<InputProvider>().AsSingle();
 		}

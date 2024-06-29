@@ -5,7 +5,7 @@ using Zenject;
 
 namespace XMG.ChildGame
 {
-	public class GameSelectorView : BaseView<GameSelectorController>
+	public sealed class GameSelectorView : BaseView<GameSelectorController>
 	{
 		[SerializeField]
 		private UIDocument _document;
@@ -15,8 +15,6 @@ namespace XMG.ChildGame
 		private Button _rightButton;
 		private Button _playButton;
 		private Button _closeButton;
-
-		public class Factory : PlaceholderFactory<GameSelectorView> { }
 
 		public override void Bind()
 		{
@@ -56,5 +54,7 @@ namespace XMG.ChildGame
 
 			_image.style.backgroundImage = new StyleBackground(selectedGame.PreviewImage);
 		}
+
+		public sealed class Factory : PlaceholderFactory<GameSelectorView> { }
 	}
 }

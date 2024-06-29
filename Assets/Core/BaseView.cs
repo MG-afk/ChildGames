@@ -13,7 +13,7 @@ namespace XMG.ChildGame
 			Controller = controller;
 
 			if (Controller == null)
-				throw new System.Exception($"Controller not constructed! { GetType().Name }");
+				throw new System.Exception($"Controller not constructed! {GetType().Name}");
 
 		}
 

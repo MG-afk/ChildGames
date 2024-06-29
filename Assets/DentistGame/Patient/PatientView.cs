@@ -31,6 +31,6 @@ namespace XMG.ChildGame.DentistGame.Patient
 			tooth.SpriteRenderer.DOColor(Color.yellow, 1f);
 		}
 
-		public class Factory : PlaceholderFactory<PatientView> { }
+		public sealed class Factory : PlaceholderFactory<PatientView> { }
 	}
 }

@@ -8,7 +8,6 @@ namespace XMG.ChildGame.Dentist
 	{
 		private readonly PatientView.Factory _patientFactory;
 
-		private PatientView _patientView;
 
 		public DentistGameStartup(PatientView.Factory patientFactory)
 		{
@@ -17,12 +16,11 @@ namespace XMG.ChildGame.Dentist
 
 		public void Initialize()
 		{
-			_patientView = _patientFactory.Create();
+			_patientFactory.Create();
 		}
 
 		public void Dispose()
 		{
-			UnityEngine.Object.Destroy(_patientView?.gameObject);
 		}
 	}
 }
