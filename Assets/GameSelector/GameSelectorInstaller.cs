@@ -21,12 +21,7 @@ namespace XMG.ChildGame.GameSelector
 				.To<GameSelectorStartup>()
 				.AsSingle();
 
-			Container.BindFactory<GameSelectorView, GameSelectorView.Factory>()
-					.FromComponentInNewPrefab(_gameSelectorViewContainer.GameSelectorView)
-					.AsTransient();
-
-			Container.Bind<GameSelectorController>()
-				.AsTransient();
+			Container.BindView<GameSelectorView, GameSelectorView.Factory, GameSelectorController>(_gameSelectorViewContainer.GameSelectorView);
 		}
 	}
 }

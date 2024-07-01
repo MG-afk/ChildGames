@@ -5,7 +5,7 @@ namespace XMG.ChildGame
 {
 	public enum MiniGameType
 	{
-		Dentist = 100,
+		Dentist = 1,
 	}
 
 	[Serializable]

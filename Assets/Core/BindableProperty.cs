@@ -13,7 +13,12 @@ namespace XMG.ChildGame
 			get => _value;
 			set
 			{
+				var oldValue = _value;
 				_value = value;
+
+				if (Equals(_value, oldValue))
+					return;
+
 				OnValueChanged?.Invoke(_value);
 			}
 		}
@@ -31,6 +36,11 @@ namespace XMG.ChildGame
 		public void RemoveListener(Action<T> callback)
 		{
 			OnValueChanged -= callback;
+		}
+
+		public bool Equals(T? x, T? y)
+		{
+			return ReferenceEquals(x, y);
 		}
 	}
 }

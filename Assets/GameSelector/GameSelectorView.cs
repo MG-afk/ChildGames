@@ -14,7 +14,6 @@ namespace XMG.ChildGame
 		private VisualElement _image;
 		private Button _rightButton;
 		private Button _playButton;
-		private Button _closeButton;
 
 		public override void Bind()
 		{
@@ -27,12 +26,12 @@ namespace XMG.ChildGame
 			_image = _document.rootVisualElement.Q<VisualElement>("GameSelector").Q<VisualElement>("Image");
 			_rightButton = _document.rootVisualElement.Q<VisualElement>("GameSelector").Q<Button>("RightButton");
 			_playButton = _document.rootVisualElement.Q<Button>("PlayButton");
-			_closeButton = _document.rootVisualElement.Q<Button>("CloseButton");
 
 			_leftButton.RegisterCallback<ClickEvent>(_ => Controller.SelectGame(SideIndex.Left));
 			_rightButton.RegisterCallback<ClickEvent>(_ => Controller.SelectGame(SideIndex.Right));
 			_playButton.RegisterCallback<ClickEvent>(_ => Controller.StartGame());
-			_closeButton.RegisterCallback<ClickEvent>(_ => Controller.CloseGame());
+
+			ChangeIndex(0);
 
 			Controller.CurrentGameIndex.AddListener(ChangeIndex);
 		}
@@ -42,7 +41,6 @@ namespace XMG.ChildGame
 			_leftButton.UnregisterCallback<ClickEvent>(_ => Controller.SelectGame(SideIndex.Left));
 			_rightButton.UnregisterCallback<ClickEvent>(_ => Controller.SelectGame(SideIndex.Right));
 			_playButton.UnregisterCallback<ClickEvent>(_ => Controller.StartGame());
-			_closeButton.UnregisterCallback<ClickEvent>(_ => Controller.CloseGame());
 
 			Controller.CurrentGameIndex.RemoveListener(ChangeIndex);
 		}

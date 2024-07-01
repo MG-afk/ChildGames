@@ -14,9 +14,6 @@ namespace XMG.ChildGame.Dentist.Tool
 		{
 			RaycasterSystem.RaycastFromMainCamera<DentistToolSubView>(out var tool);
 
-			if (tool == null)
-				return;
-
 			ClickedOnTool.Value = tool;
 		}
 	}

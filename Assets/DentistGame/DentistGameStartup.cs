@@ -1,22 +1,21 @@
 ﻿using System;
-using XMG.ChildGame.DentistGame.Patient;
+using XMG.ChildGame.Dentist.WaitingRoom;
 using Zenject;
 
 namespace XMG.ChildGame.Dentist
 {
 	public class DentistGameStartup : IInitializable, IDisposable
 	{
-		private readonly PatientView.Factory _patientFactory;
+		private readonly WaitingRoomView.Factory _waitingRoomFactory;
 
-
-		public DentistGameStartup(PatientView.Factory patientFactory)
+		public DentistGameStartup(WaitingRoomView.Factory waitingRoomFactory)
 		{
-			_patientFactory = patientFactory;
+			_waitingRoomFactory = waitingRoomFactory;
 		}
 
 		public void Initialize()
 		{
-			_patientFactory.Create();
+			_waitingRoomFactory.Create();
 		}
 
 		public void Dispose()

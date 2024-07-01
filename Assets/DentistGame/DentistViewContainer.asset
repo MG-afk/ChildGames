@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: DentistViewContainer
   m_EditorClassIdentifier: 
   <PatientView>k__BackingField: {fileID: 4209496180609038523, guid: 6ecde386d2287cd438503c7cd58b16d4, type: 3}
+  <ToolSelectorView>k__BackingField: {fileID: 3665082337069498504, guid: 14d740e8808d8c643a944c6821e68847, type: 3}
+  <WaitingRoomView>k__BackingField: {fileID: 3644605076785017912, guid: d74026fc9366007478b06aef28214887, type: 3}

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine.SceneManagement;
-using XMG.ChildGame.Dentist;
-using Zenject;
+using XMG.ChildGame.Navigation;
 
 namespace XMG.ChildGame
 {
 	public class GameSelectorController : BaseController
 	{
 		private readonly MiniGamesProvider _miniGamesProvider;
+		private readonly NavigationView.Factory _navigationFactory;
 
 		private IMiniGame _currentLoadedMiniGame;
 
@@ -16,9 +15,10 @@ namespace XMG.ChildGame
 		public MiniGamesProvider MiniGamesProvider => _miniGamesProvider;
 		public int AmountOfGames => _miniGamesProvider.GamesByType.Count;
 
-		public GameSelectorController(MiniGamesProvider miniGamesProvider, DiContainer diContainer)
+		public GameSelectorController(MiniGamesProvider miniGamesProvider, NavigationView.Factory navigationFactory)
 		{
 			_miniGamesProvider = miniGamesProvider;
+			_navigationFactory = navigationFactory;
 
 			CurrentGameIndex = new(0);
 		}
@@ -29,6 +29,8 @@ namespace XMG.ChildGame
 			_currentLoadedMiniGame = _miniGamesProvider.GamesByType[selectedGameKey];
 
 			SceneManager.LoadSceneAsync(_currentLoadedMiniGame.SceneId);
+
+			_navigationFactory.Create();
 		}
 
 		public void SelectGame(SideIndex sideIndex)
@@ -37,11 +39,6 @@ namespace XMG.ChildGame
 			var newGameIndex = (CurrentGameIndex.Value + sideIndexValue) % AmountOfGames;
 
 			CurrentGameIndex.Value = newGameIndex < 0 ? AmountOfGames - 1 : newGameIndex;
-		}
-
-		public void CloseGame()
-		{
-			SceneManager.UnloadSceneAsync(_currentLoadedMiniGame.SceneId);
 		}
 	}
 }

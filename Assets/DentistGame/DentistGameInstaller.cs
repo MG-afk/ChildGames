@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using XMG.ChildGame.Dentist.Tool;
+using XMG.ChildGame.Dentist.WaitingRoom;
 using XMG.ChildGame.DentistGame.Patient;
 using Zenject;
 
@@ -17,11 +19,9 @@ namespace XMG.ChildGame.Dentist
 			Container.BindInterfacesAndSelfTo<DentistGameStartup>()
 				.AsSingle();
 
-			Container.BindFactory<PatientView, PatientView.Factory>()
-				.FromComponentInNewPrefab(_dentistViewContainer.PatientView)
-				.AsTransient();
-
-			Container.Bind<PatientController>().AsTransient();
+			Container.BindView<PatientView, PatientView.Factory, PatientController>(_dentistViewContainer.PatientView);
+			Container.BindView<ToolSelectorView, ToolSelectorView.Factory, ToolSelectorController>(_dentistViewContainer.ToolSelectorView);
+			Container.BindView<WaitingRoomView, WaitingRoomView.Factory, WaitingRoomController>(_dentistViewContainer.WaitingRoomView);
 		}
 	}
 }
