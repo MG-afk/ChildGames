@@ -4,7 +4,7 @@ namespace XMG.ChildGame.Dentist.Tool
 {
 	public sealed class ToolSelectorController : BaseController
 	{
-		public BindableProperty<DentistToolSubView> ClickedOnTool { get; } = new();
+		public BindableProperty<ToolSubView> ClickedOnTool { get; } = new();
 
 		public override void Dispose()
 		{
@@ -12,7 +12,7 @@ namespace XMG.ChildGame.Dentist.Tool
 
 		public void ClickOnTool(InputAction.CallbackContext _)
 		{
-			RaycasterSystem.RaycastFromMainCamera<DentistToolSubView>(out var tool);
+			RaycasterSystem.RaycastFromMainCamera<ToolSubView>(out var tool);
 
 			ClickedOnTool.Value = tool;
 		}

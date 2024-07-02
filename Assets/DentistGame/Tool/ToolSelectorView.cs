@@ -7,8 +7,7 @@ namespace XMG.ChildGame.Dentist.Tool
 	public sealed class ToolSelectorView : BaseView<ToolSelectorController>
 	{
 		private InputControls _input;
-
-		private DentistToolSubView _selectedTool;
+		private ToolSubView _selectedTool;
 
 		[Inject]
 		public void Contructor(InputControls input)
@@ -30,9 +29,13 @@ namespace XMG.ChildGame.Dentist.Tool
 			Controller.ClickedOnTool.RemoveListener(ClickOnTool);
 		}
 
-		public void ClickOnTool(DentistToolSubView tool)
+		public void ClickOnTool(ToolSubView tool)
 		{
+			if (tool == null)
+				return;
+
 			_selectedTool = tool;
+			_selectedTool.Selected();
 		}
 
 		private void FollowPointer(InputAction.CallbackContext context)

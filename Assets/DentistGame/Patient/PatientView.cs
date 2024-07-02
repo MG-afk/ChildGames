@@ -1,5 +1,7 @@
 ﻿using DG.Tweening;
+using System;
 using UnityEngine;
+using XMG.ChildGame.Dentist.WaitingRoom;
 using Zenject;
 
 namespace XMG.ChildGame.DentistGame.Patient
@@ -29,6 +31,11 @@ namespace XMG.ChildGame.DentistGame.Patient
 		public void ClickOnTooth(ToothSubView tooth)
 		{
 			tooth.SpriteRenderer.DOColor(Color.yellow, 1f);
+		}
+
+		internal void Init(PatientStartData data)
+		{
+			throw new NotImplementedException();
 		}
 
 		public sealed class Factory : PlaceholderFactory<PatientView> { }

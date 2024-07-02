@@ -1,6 +1,6 @@
 ﻿using XMG.ChildGame.Dentist.Tool;
+using XMG.ChildGame.Dentist.WaitingRoom;
 using XMG.ChildGame.DentistGame.Patient;
-using static XMG.ChildGame.Dentist.WaitingRoom.WaitingPersonSubView;
 
 namespace XMG.ChildGame.Dentist
 {
@@ -22,7 +22,8 @@ namespace XMG.ChildGame.Dentist
 
 		public void LoadPatient(PatientStartData data)
 		{
-			_patientFactory.Create();
+			var patient = _patientFactory.Create();
+			patient.Init(data);
 
 			var toolSelector = _toolSelectorViewFactory.Create();
 			toolSelector.transform.position = new UnityEngine.Vector3(0, -5, 0);
