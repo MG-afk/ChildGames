@@ -5,7 +5,8 @@ namespace XMG.ChildGame
 {
 	public enum MiniGameType
 	{
-		Dentist = 1,
+		Dentist = 10,
+		Puzzle = 20,
 	}
 
 	[Serializable]
@@ -25,18 +26,5 @@ namespace XMG.ChildGame
 	{
 		public abstract string SceneId { get; }
 		public abstract Sprite PreviewImage { get; }
-	}
-
-	public class DentistMiniGame : BaseMiniGame
-	{
-		private readonly MiniGameData _miniGameData;
-
-		public override string SceneId => "Dentist";
-		public override Sprite PreviewImage => _miniGameData.PreviewImage;
-
-		public DentistMiniGame(MiniGameData miniGameData)
-		{
-			_miniGameData = miniGameData;
-		}
 	}
 }

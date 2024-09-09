@@ -1,4 +1,5 @@
 using UnityEngine;
+using XMG.ChildGame.Navigation;
 using Zenject;
 
 namespace XMG.ChildGame.GameSelector
@@ -6,6 +7,9 @@ namespace XMG.ChildGame.GameSelector
 	[CreateAssetMenu(fileName = "GameSelectorInstaller", menuName = "Installers/GameSelectorInstaller")]
 	public class GameSelectorInstaller : ScriptableObjectInstaller<GameSelectorInstaller>
 	{
+		[SerializeField]
+		private AppContainer _appContainer;
+
 		[SerializeField]
 		private GameSelectorContainer _gameSelectorViewContainer;
 
@@ -22,6 +26,7 @@ namespace XMG.ChildGame.GameSelector
 				.AsSingle();
 
 			Container.BindView<GameSelectorView, GameSelectorView.Factory, GameSelectorController>(_gameSelectorViewContainer.GameSelectorView);
+			Container.BindView<NavigationView, NavigationView.Factory, NavigationController>(_appContainer.NavigationView);
 		}
 	}
 }

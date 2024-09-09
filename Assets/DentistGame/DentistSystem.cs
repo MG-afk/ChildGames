@@ -6,16 +6,13 @@ namespace XMG.ChildGame.Dentist
 {
 	public class DentistSystem
 	{
-		private readonly InputControls _input;
 		private readonly PatientView.Factory _patientFactory;
 		private readonly ToolSelectorView.Factory _toolSelectorViewFactory;
 
 		public DentistSystem(
-			InputControls input,
 			PatientView.Factory patientFactory,
 			ToolSelectorView.Factory toolSelectorFactory)
 		{
-			_input = input;
 			_patientFactory = patientFactory;
 			_toolSelectorViewFactory = toolSelectorFactory;
 		}

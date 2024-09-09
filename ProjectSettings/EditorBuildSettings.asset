@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/DentistGame/Dentist.unity
     guid: 12439f43fea22f842b82f463dfa85470
+  - enabled: 1
+    path: Assets/PuzzleGame/Puzzle.unity
+    guid: 8822314e47dec5642a8d33a653f2cdea
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 423f5a9b98bdb3e41a3b9295eaaf2679, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 2e8ff5c1c0ea69644827db0644b9bf4e, type: 2}

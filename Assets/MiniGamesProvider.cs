@@ -13,13 +13,21 @@ namespace XMG.ChildGame
 		{
 			_gamesByType = new()
 			{
-				{ MiniGameType.Dentist, InitMiniGame(miniGameDatas, MiniGameType.Dentist) }
+				{ MiniGameType.Dentist, InitMiniGame(miniGameDatas, MiniGameType.Dentist) },
+				{ MiniGameType.Puzzle, InitMiniGame(miniGameDatas, MiniGameType.Puzzle) }
 			};
 		}
 
 		private IMiniGame InitMiniGame(MiniGameData[] miniGameDatas, MiniGameType miniGameType)
 		{
-			return new DentistMiniGame(miniGameDatas.First(data => data.GameType == miniGameType));
+			var data = miniGameDatas.First(data => data.GameType == miniGameType);
+
+			return miniGameType switch
+			{
+				MiniGameType.Dentist => new DentistMiniGame(data),
+				MiniGameType.Puzzle => new PuzzleMiniGame(data),
+				_ => null,
+			};
 		}
 	}
 }

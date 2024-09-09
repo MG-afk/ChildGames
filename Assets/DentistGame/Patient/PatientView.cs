@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using System;
 using UnityEngine;
 using XMG.ChildGame.Dentist.WaitingRoom;
 using Zenject;
@@ -35,7 +34,7 @@ namespace XMG.ChildGame.DentistGame.Patient
 
 		internal void Init(PatientStartData data)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 
 		public sealed class Factory : PlaceholderFactory<PatientView> { }

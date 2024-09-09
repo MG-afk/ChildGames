@@ -7,7 +7,6 @@ namespace XMG.ChildGame
 	public class GameSelectorController : BaseController
 	{
 		private readonly MiniGamesProvider _miniGamesProvider;
-		private readonly NavigationView.Factory _navigationFactory;
 
 		private IMiniGame _currentLoadedMiniGame;
 
@@ -18,7 +17,6 @@ namespace XMG.ChildGame
 		public GameSelectorController(MiniGamesProvider miniGamesProvider, NavigationView.Factory navigationFactory)
 		{
 			_miniGamesProvider = miniGamesProvider;
-			_navigationFactory = navigationFactory;
 
 			CurrentGameIndex = new(0);
 		}
@@ -28,9 +26,7 @@ namespace XMG.ChildGame
 			var selectedGameKey = _miniGamesProvider.GamesByType.Keys.ToArray()[CurrentGameIndex.Value];
 			_currentLoadedMiniGame = _miniGamesProvider.GamesByType[selectedGameKey];
 
-			SceneManager.LoadSceneAsync(_currentLoadedMiniGame.SceneId);
-
-			_navigationFactory.Create();
+			SceneManager.LoadScene(_currentLoadedMiniGame.SceneId);
 		}
 
 		public void SelectGame(SideIndex sideIndex)

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afffdc9bc77c7b9448d72cd3976e76c6, type: 3}
-  m_Name: DentistGameInstaller
+  m_Script: {fileID: 11500000, guid: cc86f924830ab6140984df84183d80a5, type: 3}
+  m_Name: PuzzleGameInstaller
   m_EditorClassIdentifier: 
   _appContainer: {fileID: 11400000, guid: 63a2732b3c0527547b9801f7deffc7df, type: 2}
-  _dentistViewContainer: {fileID: 11400000, guid: a1e9bc7f06129c74dad7c0bc4ca5e83c, type: 2}
+  _puzzleViewContainer: {fileID: 11400000, guid: 3208e181213d2a5498d8acf4211f751f, type: 2}

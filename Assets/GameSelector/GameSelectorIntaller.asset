@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf1bd0afdd1cfb49a130bcde13e55d3, type: 3}
   m_Name: GameSelectorIntaller
   m_EditorClassIdentifier: Assembly-CSharp:XMG.ChildGame.GameSelector:GameSelectorIntaller
+  _appContainer: {fileID: 11400000, guid: 63a2732b3c0527547b9801f7deffc7df, type: 2}
   _gameSelectorViewContainer: {fileID: 11400000, guid: 97fe84183f485cc499efd907c0843632, type: 2}
   _miniGames:
-  - GameType: 1
+  - GameType: 10
     PreviewImage: {fileID: 21300000, guid: 1afb276a5904e914da528abcce23c418, type: 3}
+  - GameType: 20
+    PreviewImage: {fileID: 21300000, guid: 366a8d4f8062c764dbb72dc509b13c65, type: 3}
