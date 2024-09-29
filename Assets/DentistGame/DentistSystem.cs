@@ -1,4 +1,5 @@
-﻿using XMG.ChildGame.Dentist.Tool;
+﻿using Dream.Core;
+using XMG.ChildGame.Dentist.Tool;
 using XMG.ChildGame.Dentist.WaitingRoom;
 using XMG.ChildGame.DentistGame.Patient;
 
@@ -6,24 +7,19 @@ namespace XMG.ChildGame.Dentist
 {
 	public class DentistSystem
 	{
-		private readonly PatientView.Factory _patientFactory;
-		private readonly ToolSelectorView.Factory _toolSelectorViewFactory;
+		private readonly IPresenterStageManager _presenterStageManager;
 
-		public DentistSystem(
-			PatientView.Factory patientFactory,
-			ToolSelectorView.Factory toolSelectorFactory)
+		public DentistSystem(IPresenterStageManager presenterStageManager)
 		{
-			_patientFactory = patientFactory;
-			_toolSelectorViewFactory = toolSelectorFactory;
+			_presenterStageManager = presenterStageManager;
 		}
 
 		public void LoadPatient(PatientStartData data)
 		{
-			var patient = _patientFactory.Create();
-			patient.Init(data);
+			//PASS the model :3
+			var patient = _presenterStageManager.CreatePresenter<PatientPresneter, PatientView>();
 
-			var toolSelector = _toolSelectorViewFactory.Create();
-			toolSelector.transform.position = new UnityEngine.Vector3(0, -5, 0);
+			var toolSelector = _presenterStageManager.CreatePresenter<ToolSelectorPresenter, ToolSelectorView>();
 		}
 	}
 }

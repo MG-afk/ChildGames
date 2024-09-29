@@ -5,7 +5,7 @@ using Zenject;
 
 namespace XMG.ChildGame.Navigation
 {
-	public class NavigationView : BaseView
+	public class NavigationView : BaseView, Dream.Core.IPanel
 	{
 		[SerializeField]
 		private Button _backButton;

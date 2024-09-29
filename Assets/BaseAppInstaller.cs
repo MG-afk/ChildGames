@@ -1,14 +1,15 @@
 ﻿using Dream.Core;
 using Dream.Core.Context;
 using UnityEngine;
+using XMG.ChildGame.Navigation;
 using Zenject;
 
 namespace XMG.ChildGame
 {
-	public class AppInstaller : MonoInstaller
+	public abstract class BaseAppInstaller : MonoInstaller
 	{
 		[SerializeField]
-		private ViewContainer _viewContainer;
+		private AppContainer _container;
 
 		[SerializeField]
 		private Transform _sceneContainer;
@@ -24,18 +25,18 @@ namespace XMG.ChildGame
 			Container.BindInterfacesTo<PresenterStageManager>().AsSingle().WithArguments(_sceneContainer, _canvasContainer);
 			Container.BindInterfacesTo<SpawnedContext>().AsSingle();
 
-			BindFactoryViewWithPresenter<GameSelectorView, GameSelectorPresenter>(_viewContainer.GameSelector);
+			BindFactoryViewWithPresenter<NavigationView, NavigationPresenter>(Container, _container.NavigationView);
 
 			Container.Bind<CoroutineProvider>().FromNewComponentOnNewGameObject().AsSingle();
 			Container.BindInterfacesTo<UpdateContext>().FromNewComponentOnNewGameObject().AsSingle();
 		}
 
-		public void BindFactoryViewWithPresenter<TView, TPreseneter>(TView view)
+		public static void BindFactoryViewWithPresenter<TView, TPreseneter>(DiContainer container, TView view)
 			where TView : MonoBehaviour, IView
 			where TPreseneter : IPresenter
 		{
-			Container.BindFactory<TView, ViewFactory<TView>>().FromComponentInNewPrefab(view).AsSingle();
-			Container.Bind<TPreseneter>().AsTransient();
+			container.BindFactory<TView, ViewFactory<TView>>().FromComponentInNewPrefab(view).AsSingle();
+			container.Bind<TPreseneter>().AsTransient();
 		}
 	}
 }

@@ -1,4 +1,7 @@
 using UnityEngine;
+using XMG.ChildGame.Dentist.Tool;
+using XMG.ChildGame.Dentist.WaitingRoom;
+using XMG.ChildGame.DentistGame.Patient;
 
 namespace XMG.ChildGame.Dentist
 {
@@ -6,12 +9,12 @@ namespace XMG.ChildGame.Dentist
 	public class DentistViewContainer : BaseViewContainer
 	{
 		[field: SerializeField]
-		public GameObject PatientView { get; private set; }
+		public PatientView PatientView { get; private set; }
 
 		[field: SerializeField]
-		public GameObject ToolSelectorView { get; private set; }
+		public ToolSelectorView ToolSelectorView { get; private set; }
 
 		[field: SerializeField]
-		public GameObject WaitingRoomView { get; private set; }
+		public WaitingRoomView WaitingRoomView { get; private set; }
 	}
 }

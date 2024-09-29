@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using XMG.ChildGame.Navigation;
 
 namespace XMG.ChildGame
 {
@@ -6,6 +7,6 @@ namespace XMG.ChildGame
 	public sealed class AppContainer : BaseViewContainer
 	{
 		[field: SerializeField]
-		public GameObject NavigationView { get; private set; }
+		public NavigationView NavigationView { get; private set; }
 	}
 }

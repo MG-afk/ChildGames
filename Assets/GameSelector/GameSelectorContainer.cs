@@ -6,6 +6,6 @@ namespace XMG.ChildGame
 	public sealed class GameSelectorContainer : BaseViewContainer
 	{
 		[field: SerializeField]
-		public GameObject GameSelectorView { get; private set; }
+		public GameSelectorView GameSelector { get; private set; }
 	}
 }

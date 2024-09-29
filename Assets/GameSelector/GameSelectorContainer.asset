@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0e435d2d53fae41a3a10a02134fc3a, type: 3}
   m_Name: GameSelectorContainer
   m_EditorClassIdentifier: 
-  <GameSelectorView>k__BackingField: {fileID: 2749637279902760890, guid: 15fb6d1ebadf51b489218fa83fec4090, type: 3}
+  <GameSelector>k__BackingField: {fileID: 2563475438165792829, guid: 15fb6d1ebadf51b489218fa83fec4090, type: 3}

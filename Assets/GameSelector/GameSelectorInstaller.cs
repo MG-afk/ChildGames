@@ -3,12 +3,8 @@ using Zenject;
 
 namespace XMG.ChildGame.GameSelector
 {
-	[CreateAssetMenu(fileName = "GameSelectorInstaller", menuName = "Installers/GameSelectorInstaller")]
-	public class GameSelectorInstaller : ScriptableObjectInstaller<GameSelectorInstaller>
+	public class GameSelectorInstaller : BaseAppInstaller
 	{
-		[SerializeField]
-		private AppContainer _appContainer;
-
 		[SerializeField]
 		private GameSelectorContainer _gameSelectorViewContainer;
 
@@ -17,8 +13,10 @@ namespace XMG.ChildGame.GameSelector
 
 		public override void InstallBindings()
 		{
-
+			base.InstallBindings();
 			Container.Bind<MiniGamesProvider>().AsSingle().WithArguments(_miniGames);
+
+			BindFactoryViewWithPresenter<GameSelectorView, GameSelectorPresenter>(Container, _gameSelectorViewContainer.GameSelector);
 
 			Container.Bind<IInitializable>()
 				.To<GameSelectorStartup>()

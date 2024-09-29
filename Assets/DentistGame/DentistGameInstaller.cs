@@ -1,22 +1,24 @@
 ﻿using UnityEngine;
-using Zenject;
+using XMG.ChildGame.Dentist.Tool;
+using XMG.ChildGame.Dentist.WaitingRoom;
+using XMG.ChildGame.DentistGame.Patient;
 
 namespace XMG.ChildGame.Dentist
 {
-	[CreateAssetMenu(fileName = "DentistGameInstaller", menuName = "Installers/DentistGameInstaller")]
-	public class DentistGameInstaller : ScriptableObjectInstaller<DentistGameInstaller>
+	public class DentistGameInstaller : BaseAppInstaller
 	{
-		[SerializeField]
-		private AppContainer _appContainer;
-
 		[SerializeField]
 		private DentistViewContainer _dentistViewContainer;
 
 		public override void InstallBindings()
 		{
+			base.InstallBindings();
+			Container.Bind<DentistSystem>().AsSingle();
 			Container.BindInterfacesAndSelfTo<DentistGameStartup>().AsSingle();
 
-			Container.Bind<DentistSystem>().AsSingle();
+			BindFactoryViewWithPresenter<PatientView, PatientPresneter>(Container, _dentistViewContainer.PatientView);
+			BindFactoryViewWithPresenter<ToolSelectorView, ToolSelectorPresenter>(Container, _dentistViewContainer.ToolSelectorView);
+			BindFactoryViewWithPresenter<WaitingRoomView, WaitingRoomPresenter>(Container, _dentistViewContainer.WaitingRoomView);
 		}
 	}
 }

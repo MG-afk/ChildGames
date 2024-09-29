@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 999e82d2b4eb9324d855c4ec48c7d05f, type: 3}
-  m_Name: ViewContainer
+  m_Name: GameSelectorViewContaienr
   m_EditorClassIdentifier: 
   <GameSelector>k__BackingField: {fileID: 2563475438165792829, guid: 15fb6d1ebadf51b489218fa83fec4090, type: 3}

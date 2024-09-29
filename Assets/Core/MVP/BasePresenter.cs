@@ -21,13 +21,6 @@ namespace Dream.Core
 			Id = id;
 
 			View.Destroyed += Dispose;
-
-			Init();
-		}
-
-		protected virtual void Init()
-		{
-
 		}
 
 		protected virtual void OnDispose()
