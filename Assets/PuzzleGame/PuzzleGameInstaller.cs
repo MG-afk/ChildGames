@@ -1,20 +1,18 @@
 using UnityEngine;
-using Zenject;
 
 namespace XMG.ChildGame.Puzzle
 {
-	[CreateAssetMenu(fileName = "PuzzleGameInstaller", menuName = "Installers/PuzzleGameInstaller")]
-	public class PuzzleGameInstaller : ScriptableObjectInstaller<PuzzleGameInstaller>
+	public class PuzzleGameInstaller : BaseAppInstaller
 	{
-		[SerializeField]
-		private AppContainer _appContainer;
-
 		[SerializeField]
 		private PuzzleViewContainer _puzzleViewContainer;
 
 		public override void InstallBindings()
 		{
+			base.InstallBindings();
 			Container.BindInterfacesAndSelfTo<PuzzleGameStartup>().AsSingle();
+
+			BindFactoryViewWithPresenter<PuzzleView, PuzzlePresenter>(Container, _puzzleViewContainer.PuzzleView);
 		}
 	}
 }

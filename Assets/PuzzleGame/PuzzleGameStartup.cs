@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dream.Core;
+using System;
 using XMG.ChildGame.Navigation;
 using Zenject;
 
@@ -6,21 +7,18 @@ namespace XMG.ChildGame.Puzzle
 {
 	public class PuzzleGameStartup : IInitializable, IDisposable
 	{
-		private readonly NavigationView.Factory _navigationFactory;
-		private readonly PuzzleView.Factory _puzzleFactory;
+		private readonly IPresenterStageManager _presenterStageManager;
 
-		public PuzzleGameStartup(
-			NavigationView.Factory navigationFactory,
-			PuzzleView.Factory puzzleFactory)
+		public PuzzleGameStartup(IPresenterStageManager presenterStageManager)
 		{
-			_navigationFactory = navigationFactory;
-			_puzzleFactory = puzzleFactory;
+			_presenterStageManager = presenterStageManager;
 		}
+
 
 		public void Initialize()
 		{
-			_navigationFactory.Create();
-			_puzzleFactory.Create();
+			_presenterStageManager.CreatePanelPresenter<NavigationPresenter, NavigationView>();
+			_presenterStageManager.CreatePresenter<PuzzlePresenter, PuzzleView>();
 		}
 
 		public void Dispose()

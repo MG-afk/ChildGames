@@ -305,7 +305,11 @@ MonoBehaviour:
   _sceneContainer: {fileID: 3792155233143039440}
   _canvasContainer: {fileID: 6988255546026440994}
   _gameSelectorViewContainer: {fileID: 11400000, guid: 97fe84183f485cc499efd907c0843632, type: 2}
-  _miniGames: []
+  _miniGames:
+  - GameType: 10
+    PreviewImage: {fileID: 21300000, guid: 1afb276a5904e914da528abcce23c418, type: 3}
+  - GameType: 20
+    PreviewImage: {fileID: 21300000, guid: 366a8d4f8062c764dbb72dc509b13c65, type: 3}
 --- !u!4 &2973974410827133692
 Transform:
   m_ObjectHideFlags: 0

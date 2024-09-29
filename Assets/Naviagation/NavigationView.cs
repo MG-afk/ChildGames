@@ -1,24 +1,14 @@
 using Dream.Core;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 using Zenject;
 
 namespace XMG.ChildGame.Navigation
 {
 	public class NavigationView : BaseView, Dream.Core.IPanel
 	{
-		[SerializeField]
-		private Button _backButton;
-
-		protected override void Bind()
-		{
-			//_backButton.RegisterCallback<ClickEvent>(_ => Controller.BackToMainScene());
-		}
-
-		protected override void BeforeDestroy()
-		{
-			//_backButton.UnregisterCallback<ClickEvent>(_ => Controller.BackToMainScene());
-		}
+		[field: SerializeField]
+		public Button BackButton { get; private set; }
 
 		public sealed class Factory : PlaceholderFactory<NavigationView> { }
 	}

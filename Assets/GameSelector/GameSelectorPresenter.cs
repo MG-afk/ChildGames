@@ -49,7 +49,7 @@ namespace XMG.ChildGame
 			var selectedGameKey = _miniGamesProvider.GamesByType.Keys.ToArray()[_currentGameIndex.Value];
 			_currentLoadedMiniGame = _miniGamesProvider.GamesByType[selectedGameKey];
 
-			SceneManager.LoadSceneAsync(_currentLoadedMiniGame.SceneId, LoadSceneMode.Additive);
+			SceneManager.LoadSceneAsync(_currentLoadedMiniGame.SceneId);
 		}
 
 		public void SelectGame(SideIndex sideIndex)

@@ -6,6 +6,6 @@ namespace XMG.ChildGame.Puzzle
 	public class PuzzleViewContainer : BaseViewContainer
 	{
 		[field: SerializeField]
-		public GameObject PuzzleView { get; private set; }
+		public PuzzleView PuzzleView { get; private set; }
 	}
 }
