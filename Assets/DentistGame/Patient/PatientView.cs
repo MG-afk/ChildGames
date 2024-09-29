@@ -1,30 +1,31 @@
 ﻿using DG.Tweening;
+using Dream.Core;
 using UnityEngine;
 using XMG.ChildGame.Dentist.WaitingRoom;
 using Zenject;
 
 namespace XMG.ChildGame.DentistGame.Patient
 {
-	public class PatientView : BaseView<PatientController>
+	public class PatientView : BaseView
 	{
-		private InputControls _input;
+		private IInputProvider _inputProvider;
 
 		[Inject]
-		public void Contructor(InputControls input)
+		public void Contructor(IInputProvider inputProvider)
 		{
-			_input = input;
+			_inputProvider = inputProvider;
 		}
 
-		public override void Bind()
+		protected override void Bind()
 		{
-			_input.Player.Click.performed += Controller.ClickOnTooth;
-			Controller.ClickedOnTooth.AddListener(ClickOnTooth);
+			//_inputProvider.Clicked += Controller.ClickOnTooth;
+			//Controller.ClickedOnTooth.AddListener(ClickOnTooth);
 		}
 
-		public override void BeforeDispose()
+		protected override void BeforeDestroy()
 		{
-			_input.Player.Click.performed -= Controller.ClickOnTooth;
-			Controller.ClickedOnTooth.RemoveListener(ClickOnTooth);
+			//_inputProvider.Clicked -= Controller.ClickOnTooth;
+			//Controller.ClickedOnTooth.RemoveListener(ClickOnTooth);
 		}
 
 		public void ClickOnTooth(ToothSubView tooth)

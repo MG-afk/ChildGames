@@ -1,5 +1,4 @@
 using UnityEngine;
-using XMG.ChildGame.Navigation;
 using Zenject;
 
 namespace XMG.ChildGame.Puzzle
@@ -16,9 +15,6 @@ namespace XMG.ChildGame.Puzzle
 		public override void InstallBindings()
 		{
 			Container.BindInterfacesAndSelfTo<PuzzleGameStartup>().AsSingle();
-
-			Container.BindView<NavigationView, NavigationView.Factory, NavigationController>(_appContainer.NavigationView);
-			Container.BindView<PuzzleView, PuzzleView.Factory, PuzzleController>(_puzzleViewContainer.PuzzleView);
 		}
 	}
 }

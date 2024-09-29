@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _board: {fileID: -5466711410593088643, guid: 61e92a384baee6d498db8b45113d67bc, type: 3}
-  _piece: {fileID: 1545323325547432268, guid: fe028121c6573f74a88803a935863c59, type: 3}
-  _sprite: {fileID: 21300000, guid: a7ec60de30fae8245931740dca936150, type: 3}
+  _piecePrefab: {fileID: 1545323325547432268, guid: fe028121c6573f74a88803a935863c59, type: 3}
+  _sprite: {fileID: 1763014460331064234, guid: 5b2c1c5ef86f1574894d97c522899f3f, type: 3}

@@ -1,163 +1,175 @@
-﻿using JetBrains.Annotations;
-using System.Collections.Generic;
+﻿using Dream.Core;
+using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
 namespace XMG.ChildGame.Puzzle
 {
-	public sealed class PuzzleView : BaseView<PuzzleController>
+	public sealed class PuzzleView : BaseView
 	{
 		[SerializeField]
 		private PuzzleBoardSubView _board;
-
 		[SerializeField]
-		private PuzzlePieceSubView _piece;
+		private PuzzlePieceSubView _piecePrefab;
 
 		public Sprite _sprite;
-		private int _gridSize = 3; // 3x3 grid
+		private int _gridSize = 3;
+		private PuzzlePieceSubView[,] _grid;
+		private PuzzlePieceSubView _draggedPiece;
+		private Camera _mainCamera;
 
-		private GameObject[,] _grid;
-		private Vector2Int _emptySpace;
+		private IInputProvider _inputProvider;
 
 		[Inject, UsedImplicitly]
-		private void Construct()
+		private void Construct(IInputProvider inputProvider)
 		{
+			_inputProvider = inputProvider;
 		}
 
-		void Start()
+		private void Start()
 		{
+			_mainCamera = Camera.main;
 			InitializeGame();
 		}
 
-		void InitializeGame()
+		private void InitializeGame()
 		{
-			_grid = new GameObject[_gridSize, _gridSize];
+			_grid = new PuzzlePieceSubView[_gridSize, _gridSize];
 			var spriteSlicer = new SpriteSlicer(_sprite, _gridSize, _gridSize);
 			var sprites = spriteSlicer.SliceSprite();
 
-			// Create and place tiles
 			for (var x = 0; x < _gridSize; x++)
 			{
 				for (var y = 0; y < _gridSize; y++)
 				{
-					if (x == _gridSize - 1 && y == _gridSize - 1)
-					{
-						// Leave last space empty
-						_emptySpace = new Vector2Int(x, y);
-						continue;
-					}
-
-					var position = new Vector3(x - 1, y - 1, 0); // Adjust position as needed
-					var tile = Instantiate(_piece, position, Quaternion.identity);
-					_grid[x, y] = tile.gameObject;
-
-					// Set tile number or image
+					var position = new Vector3(x - 1, y - 1, 0);
+					var tile = Instantiate(_piecePrefab, position, Quaternion.identity);
+					_grid[x, y] = tile;
 					tile.GetComponent<SpriteRenderer>().sprite = sprites[x, y];
-					//.SetNumber(x + y * gridSize + 1);
+					tile.SetNumber(x + y * _gridSize + 1);
 				}
 			}
-
 			ShufflePuzzle();
 		}
 
-		void ShufflePuzzle()
+		private void ShufflePuzzle()
 		{
-			// Perform random valid moves to shuffle the puzzle
-			for (var i = 0; i < 100; i++) // Adjust number of shuffles as needed
+			for (var i = 0; i < 100; i++)
 			{
-				var validMoves = GetValidMoves();
-				if (validMoves.Count > 0)
-				{
-					int randomIndex = Random.Range(0, validMoves.Count);
-					MoveTile(validMoves[randomIndex]);
-				}
+				var pos1 = new Vector2Int(Random.Range(0, _gridSize), Random.Range(0, _gridSize));
+				var pos2 = new Vector2Int(Random.Range(0, _gridSize), Random.Range(0, _gridSize));
+				SwapPieces(pos1, pos2);
 			}
 		}
 
-		List<Vector2Int> GetValidMoves()
+		private void Update()
 		{
-			var validMoves = new List<Vector2Int>();
-			Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+			var mousePosition = -_mainCamera.ScreenToWorldPoint(new Vector3(
+				_inputProvider.PointerPosition.x,
+				_inputProvider.PointerPosition.y,
+				_mainCamera.transform.position.z));
 
-			foreach (var dir in directions)
+			if (Input.GetMouseButtonDown(0) && _draggedPiece == null)
 			{
-				var newPos = _emptySpace + dir;
-				if (IsValidPosition(newPos))
+				//RaycasterSystem.RaycastFromMainCamera(out _draggedPiece);
+
+				if (_draggedPiece != null)
 				{
-					validMoves.Add(newPos);
+					_draggedPiece.GetComponent<SpriteRenderer>().sortingOrder = 1;
+					_draggedPiece.transform.localScale = Vector3.one * 1.1f;
 				}
 			}
+			else if (Input.GetMouseButtonUp(0) && _draggedPiece != null)
+			{
+				var gridPosition = WorldToGridPosition(mousePosition);
 
-			return validMoves;
+				if (IsValidGridPosition(gridPosition))
+				{
+					var originalPosition = GetPiecePosition(_draggedPiece);
+					SwapPieces(originalPosition, gridPosition);
+				}
+				else
+				{
+					_draggedPiece.transform.position = GridToWorldPosition(GetPiecePosition(_draggedPiece));
+				}
+
+				_draggedPiece.GetComponent<SpriteRenderer>().sortingOrder = 0;
+				_draggedPiece.transform.localScale = Vector3.one;
+				_draggedPiece = null;
+				CheckWinCondition();
+			}
+
+
+			if (_draggedPiece != null)
+			{
+				mousePosition.z = 0;
+				_draggedPiece.transform.position = mousePosition;
+			}
 		}
 
-		bool IsValidPosition(Vector2Int pos)
+		private Vector2Int WorldToGridPosition(Vector2 worldPosition)
+		{
+			return new Vector2Int(
+				Mathf.RoundToInt(worldPosition.x + 1),
+				Mathf.RoundToInt(worldPosition.y + 1)
+			);
+		}
+
+		private Vector3 GridToWorldPosition(Vector2Int gridPosition)
+		{
+			return new Vector3(gridPosition.x - 1, gridPosition.y - 1, 0);
+		}
+
+		private bool IsValidGridPosition(Vector2Int pos)
 		{
 			return pos.x >= 0 && pos.x < _gridSize && pos.y >= 0 && pos.y < _gridSize;
 		}
 
-		void Update()
+		private Vector2Int GetPiecePosition(PuzzlePieceSubView piece)
 		{
-			if (Input.GetMouseButtonDown(0))
+			for (var x = 0; x < _gridSize; x++)
 			{
-				RaycasterSystem.RaycastFromMainCamera<PuzzlePieceSubView>(out var puzzle);
-
-				if (puzzle != null)
+				for (var y = 0; y < _gridSize; y++)
 				{
-					var tilePos = new Vector2Int(
-						Mathf.RoundToInt(puzzle.transform.position.x + 1),
-						Mathf.RoundToInt(puzzle.transform.position.y + 1)
-					);
-
-					if (IsAdjacentToEmptySpace(tilePos))
+					if (_grid[x, y] == piece)
 					{
-						MoveTile(tilePos);
-						CheckWinCondition();
+						return new Vector2Int(x, y);
 					}
 				}
 			}
+			return new Vector2Int(-1, -1); // Not found
 		}
 
-		bool IsAdjacentToEmptySpace(Vector2Int pos)
+		private void SwapPieces(Vector2Int pos1, Vector2Int pos2)
 		{
-			return (Mathf.Abs(pos.x - _emptySpace.x) + Mathf.Abs(pos.y - _emptySpace.y)) == 1;
-		}
+			var piece1 = _grid[pos1.x, pos1.y];
+			var piece2 = _grid[pos2.x, pos2.y];
 
-		void MoveTile(Vector2Int tilePos)
-		{
-			GameObject tile = _grid[tilePos.x, tilePos.y];
-			tile.transform.position = new Vector3(_emptySpace.x - 1, _emptySpace.y - 1, 0);
+			// Swap positions
+			piece1.transform.position = GridToWorldPosition(pos2);
+			piece2.transform.position = GridToWorldPosition(pos1);
 
-			_grid[_emptySpace.x, _emptySpace.y] = tile;
-			_grid[tilePos.x, tilePos.y] = null;
-
-			_emptySpace = tilePos;
+			// Update grid
+			_grid[pos1.x, pos1.y] = piece2;
+			_grid[pos2.x, pos2.y] = piece1;
 		}
 
 		void CheckWinCondition()
 		{
-			for (int x = 0; x < _gridSize; x++)
+			for (var x = 0; x < _gridSize; x++)
 			{
-				for (int y = 0; y < _gridSize; y++)
+				for (var y = 0; y < _gridSize; y++)
 				{
-					if (x == _gridSize - 1 && y == _gridSize - 1)
-						continue; // Skip empty space
-
-					GameObject tile = _grid[x, y];
-					if (tile == null)
-						return; // Puzzle not solved
-
-					// Check if tile is in correct position
-					// int correctNumber = x + y * gridSize + 1;
-					// if (tile.GetComponent<TileScript>().GetNumber() != correctNumber)
-					//     return; // Puzzle not solved
+					var tile = _grid[x, y];
+					var correctNumber = x + y * _gridSize + 1;
+					if (tile.GetNumber() != correctNumber)
+						return;
 				}
 			}
-
 			Debug.Log("Puzzle solved!");
+			// TODO: Add celebration effect or transition to next level
 		}
 
 		public sealed class Factory : PlaceholderFactory<PuzzleView> { }
-
 	}
 }

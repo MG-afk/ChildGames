@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bd58199ff5a47a4e9d092b33865d5c6, type: 3}
   m_Name: AppContainer
   m_EditorClassIdentifier: 
-  <NavigationView>k__BackingField: {fileID: 7116701691844371167, guid: 42c18dc9bf0f6bd40a6e0e92998ba4e1, type: 3}
+  <NavigationView>k__BackingField: {fileID: 4822196145723497762, guid: 42c18dc9bf0f6bd40a6e0e92998ba4e1, type: 3}

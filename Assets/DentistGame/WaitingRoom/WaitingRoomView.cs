@@ -1,29 +1,30 @@
+using Dream.Core;
 using Zenject;
 
 namespace XMG.ChildGame.Dentist.WaitingRoom
 {
-	public sealed class WaitingRoomView : BaseView<WaitingRoomController>
+	public sealed class WaitingRoomView : BaseView
 	{
-		private InputControls _input;
+		private IInputProvider _inputProvider;
 		private DentistSystem _dentistSystem;
 
 		[Inject]
-		public void Contructor(InputControls input, DentistSystem dentistSystem)
+		public void Contructor(IInputProvider inputProvider, DentistSystem dentistSystem)
 		{
-			_input = input;
+			_inputProvider = inputProvider;
 			_dentistSystem = dentistSystem;
 		}
 
-		public override void Bind()
+		protected override void Bind()
 		{
-			_input.Player.Click.performed += Controller.ClickOnPerson;
-			Controller.ClickedOnPerson.AddListener(ClickOnPerson);
+			//_inputProvider.Clicked += Controller.ClickOnPerson;
+			//Controller.ClickedOnPerson.AddListener(ClickOnPerson);
 		}
-
-		public override void BeforeDispose()
+		protected override void BeforeDestroy()
 		{
-			_input.Player.Click.performed -= Controller.ClickOnPerson;
-			Controller.ClickedOnPerson.RemoveListener(ClickOnPerson);
+			base.BeforeDestroy();
+			//_inputProvider.Clicked -= Controller.ClickOnPerson;
+			//Controller.ClickedOnPerson.RemoveListener(ClickOnPerson);
 		}
 
 		public void ClickOnPerson(WaitingPersonSubView person)

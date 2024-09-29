@@ -1,32 +1,31 @@
+using Dream.Core;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 
 namespace XMG.ChildGame.Dentist.Tool
 {
-	public sealed class ToolSelectorView : BaseView<ToolSelectorController>
+	public sealed class ToolSelectorView : BaseView
 	{
-		private InputControls _input;
+		private IInputProvider _inputProvider;
 		private ToolSubView _selectedTool;
 
 		[Inject]
-		public void Contructor(InputControls input)
+		public void Contructor(IInputProvider inputProvider)
 		{
-			_input = input;
+			_inputProvider = inputProvider;
 		}
 
-		public override void Bind()
+		protected override void Bind()
 		{
-			_input.Player.Click.performed += Controller.ClickOnTool;
-			_input.Player.PointerPosition.performed += FollowPointer;
-			Controller.ClickedOnTool.AddListener(ClickOnTool);
+			//_inputProvider.Clicked += Controller.ClickOnTool;
+			//_inputProvider.PointerMoved += FollowPointer;
+			//Controller.ClickedOnTool.AddListener(ClickOnTool);
 		}
-
-		public override void BeforeDispose()
+		protected override void BeforeDestroy()
 		{
-			_input.Player.Click.performed -= Controller.ClickOnTool;
-			_input.Player.PointerPosition.performed -= FollowPointer;
-			Controller.ClickedOnTool.RemoveListener(ClickOnTool);
+			//_inputProvider.Clicked -= Controller.ClickOnTool;
+			//_inputProvider.PointerMoved -= FollowPointer;
+			//Controller.ClickedOnTool.RemoveListener(ClickOnTool);
 		}
 
 		public void ClickOnTool(ToolSubView tool)
@@ -38,13 +37,13 @@ namespace XMG.ChildGame.Dentist.Tool
 			_selectedTool.Selected();
 		}
 
-		private void FollowPointer(InputAction.CallbackContext context)
+		private void FollowPointer()
 		{
 			if (_selectedTool == null)
 				return;
 
-			var screenPosition = context.ReadValue<Vector2>();
-			var worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, -Camera.main.transform.position.z));
+			var worldPosition = Camera.main.ScreenToWorldPoint(
+				new Vector3(_inputProvider.PointerPosition.x, _inputProvider.PointerPosition.y, -Camera.main.transform.position.z));
 
 			_selectedTool.transform.position = new Vector3(worldPosition.x, worldPosition.y, _selectedTool.transform.position.z);
 		}

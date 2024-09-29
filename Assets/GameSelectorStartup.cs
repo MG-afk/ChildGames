@@ -1,19 +1,20 @@
-﻿using Zenject;
+﻿using Dream.Core;
+using Zenject;
 
 namespace XMG.ChildGame
 {
 	public class GameSelectorStartup : IInitializable
 	{
-		private readonly GameSelectorView.Factory _gameSelectorViewFactory;
+		private readonly IPresenterStageManager _presenterStageManager;
 
-		public GameSelectorStartup(GameSelectorView.Factory gameSelectorViewFactory)
+		public GameSelectorStartup(IPresenterStageManager presenterStageManager)
 		{
-			_gameSelectorViewFactory = gameSelectorViewFactory;
+			_presenterStageManager = presenterStageManager;
 		}
 
 		public void Initialize()
 		{
-			_gameSelectorViewFactory.Create();
+			_presenterStageManager.CreatePanelPresenter<GameSelectorPresenter, GameSelectorView>();
 		}
 	}
 }

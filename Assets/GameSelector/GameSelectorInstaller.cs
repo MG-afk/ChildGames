@@ -1,5 +1,4 @@
 using UnityEngine;
-using XMG.ChildGame.Navigation;
 using Zenject;
 
 namespace XMG.ChildGame.GameSelector
@@ -24,9 +23,6 @@ namespace XMG.ChildGame.GameSelector
 			Container.Bind<IInitializable>()
 				.To<GameSelectorStartup>()
 				.AsSingle();
-
-			Container.BindView<GameSelectorView, GameSelectorView.Factory, GameSelectorController>(_gameSelectorViewContainer.GameSelectorView);
-			Container.BindView<NavigationView, NavigationView.Factory, NavigationController>(_appContainer.NavigationView);
 		}
 	}
 }

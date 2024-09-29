@@ -7,8 +7,8 @@ namespace XMG.ChildGame.Puzzle
 		private readonly Sprite _originalSprite;
 		private readonly int _rows;
 		private readonly int _columns;
-		private readonly float _puzzleWidth = 10f;
-		private readonly float _puzzleHeight = 10f;
+		private readonly float _puzzleWidth = 15f;
+		private readonly float _puzzleHeight = 15f;
 
 		public SpriteSlicer(Sprite originalSprite, int rows, int columns)
 		{

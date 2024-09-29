@@ -1,23 +1,24 @@
-﻿using UnityEngine.InputSystem;
+﻿using Dream.Core;
+using UnityEngine;
 
 namespace XMG.ChildGame.DentistGame.Patient
 {
-	public class PatientController : BaseController
+	public class PatientController : MonoBehaviour
 	{
 		public BindableProperty<ToothSubView> ClickedOnTooth { get; } = new();
 
-		public override void Dispose()
+		public void Dispose()
 		{
 		}
 
-		public void ClickOnTooth(InputAction.CallbackContext _)
+		public void ClickOnTooth()
 		{
-			RaycasterSystem.RaycastFromMainCamera<ToothSubView>(out var tooth);
+			//RaycasterSystem.RaycastFromMainCamera<ToothSubView>(out var tooth);
 
-			if (tooth == null)
-				return;
+			//if (tooth == null)
+			//	return;
 
-			ClickedOnTooth.Value = tooth;
+			//ClickedOnTooth.Value = tooth;
 		}
 
 	}

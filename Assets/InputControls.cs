@@ -217,7 +217,7 @@ namespace XMG.ChildGame
                 m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
                 AddCallbacks(instance);
             }
-        }
+		}
         public PlayerActions @Player => new PlayerActions(this);
         public interface IPlayerActions
         {
