@@ -8,6 +8,7 @@ namespace XMG.ChildGame
 	public interface IInputProvider
 	{
 		event Action Clicked;
+		event Action Unclicked;
 		event Action PointerMoved;
 
 		Vector2 PointerPosition { get; }
@@ -20,6 +21,7 @@ namespace XMG.ChildGame
 		IDisposable
 	{
 		public event Action Clicked;
+		public event Action Unclicked;
 		public event Action PointerMoved;
 
 		private InputControls _inputActions;
@@ -43,7 +45,11 @@ namespace XMG.ChildGame
 
 		public void OnClick(InputAction.CallbackContext context)
 		{
-			Clicked?.Invoke();
+			if (context.performed)
+				Clicked?.Invoke();
+
+			if (context.canceled)
+				Unclicked?.Invoke();
 		}
 
 		public void OnPointerPosition(InputAction.CallbackContext context)

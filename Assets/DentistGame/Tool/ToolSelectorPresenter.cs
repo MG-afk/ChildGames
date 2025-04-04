@@ -10,6 +10,8 @@ namespace XMG.ChildGame.Dentist.Tool
 		private IInputProvider _inputProvider;
 		private ToolSubView _selectedTool;
 
+		private Vector2 _startPosition;
+
 		public BindableProperty<ToolSubView> ClickedOnTool { get; } = new();
 
 		[Inject]
@@ -20,13 +22,15 @@ namespace XMG.ChildGame.Dentist.Tool
 
 
 			_inputProvider.Clicked += ClickOnTool;
+			_inputProvider.Unclicked += UnclickOnTool;
 			_inputProvider.PointerMoved += FollowPointer;
-			ClickedOnTool.Bind(ClickOnTool, false, this);
+			ClickedOnTool.Bind(ClickOnTool, true, this);
 		}
 
 		protected override void OnDispose()
 		{
 			_inputProvider.Clicked -= ClickOnTool;
+			_inputProvider.Unclicked -= UnclickOnTool;
 			_inputProvider.PointerMoved -= FollowPointer;
 		}
 
@@ -37,7 +41,7 @@ namespace XMG.ChildGame.Dentist.Tool
 			ClickedOnTool.Value = tool;
 		}
 
-		public void ClickOnTool(ToolSubView tool)
+		private void ClickOnTool(ToolSubView tool)
 		{
 			if (tool == null)
 				return;
@@ -46,13 +50,29 @@ namespace XMG.ChildGame.Dentist.Tool
 			_selectedTool.Selected();
 		}
 
+		private void UnclickOnTool()
+		{
+			if (_selectedTool == null)
+				return;
+
+			_selectedTool.Unselected();
+			_selectedTool = null;
+		}
+
 		private void FollowPointer()
 		{
 			if (_selectedTool == null)
 				return;
 
-			var worldPosition = Camera.main.ScreenToWorldPoint(
-				new Vector3(_inputProvider.PointerPosition.x, _inputProvider.PointerPosition.y, -Camera.main.transform.position.z));
+			var camera = Camera.main;
+
+			if (camera == null)
+				return;
+
+			var worldPosition = camera.ScreenToWorldPoint(new Vector3(
+				_inputProvider.PointerPosition.x,
+				_inputProvider.PointerPosition.y,
+				-camera.transform.position.z));
 
 			_selectedTool.transform.position = new Vector3(worldPosition.x, worldPosition.y, _selectedTool.transform.position.z);
 		}

@@ -14,5 +14,10 @@ namespace XMG.ChildGame.Dentist.Tool
 		{
 			_collider.enabled = false;
 		}
+
+		public void Unselected()
+		{
+			_collider.enabled = true;
+		}
 	}
 }

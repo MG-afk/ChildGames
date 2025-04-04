@@ -1,4 +1,5 @@
 ﻿using Dream.Core;
+using Dream.XMG;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
@@ -45,7 +46,7 @@ namespace XMG.ChildGame.Puzzle
 					var position = new Vector3(x - 1, y - 1, 0);
 					var tile = Instantiate(_piecePrefab, position, Quaternion.identity);
 					_grid[x, y] = tile;
-					tile.GetComponent<SpriteRenderer>().sprite = sprites[x, y];
+					tile.GetComponent<SpriteRenderer>().sprite = sprites[x, _gridSize - 1 - y];
 					tile.SetNumber(x + y * _gridSize + 1);
 				}
 			}
@@ -71,7 +72,7 @@ namespace XMG.ChildGame.Puzzle
 
 			if (Input.GetMouseButtonDown(0) && _draggedPiece == null)
 			{
-				//RaycasterSystem.RaycastFromMainCamera(out _draggedPiece);
+				RaycasterSystem.RaycastFromMainCamera(out _draggedPiece);
 
 				if (_draggedPiece != null)
 				{
@@ -169,7 +170,5 @@ namespace XMG.ChildGame.Puzzle
 			Debug.Log("Puzzle solved!");
 			// TODO: Add celebration effect or transition to next level
 		}
-
-		public sealed class Factory : PlaceholderFactory<PuzzleView> { }
 	}
 }
